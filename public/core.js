@@ -39,14 +39,16 @@ function mainController($scope, $http) {
             });
     };
     $scope.detectTodo = function() {
+        var display;
         $http.post('/api/ml', $scope.formData)
             .success(function(data) {
-                console.log('this is working');
+                console.log('Detector is working');
                 // var t = data.toString();
                 $scope.formData = {}; // clear the form so our user is ready to enter another
                 // $scope.todos = data;
                 console.log(data);
                 // $scope.formData.text = data;
+                display = data;
                 alert(data)
             })
             .error(function(data) {
@@ -54,5 +56,23 @@ function mainController($scope, $http) {
             });
             // console.log(data);
     };
+    $scope.classifyTodo = function () {
+        // var display ='';
+        $http.post('/api/clf', $scope.formData)
+            .success(function(data) {
+                console.log('Classifier is also working');
+                // var t = data.toString();
+                $scope.formData = {}; // clear the form so our user is ready to enter another
+                // $scope.todos = data;
+                console.log(data);
+                // $scope.formData.text = data;
+                // display += '\n' + data;
+                alert(data);
+            })
+            .error(function(data) {
+                console.log('Error is: ' + data);
+            });
+        // console.log(data);
+    }
 
 }

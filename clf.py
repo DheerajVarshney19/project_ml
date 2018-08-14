@@ -2,11 +2,34 @@
 import pickle
 import sys
 import random
+import time
 
-
-filename = 'finalized_model.sav'
+name = ['alt.atheism',
+ 'comp.graphics',
+ 'comp.os.ms-windows.misc',
+ 'comp.sys.ibm.pc.hardware',
+ 'comp.sys.mac.hardware',
+ 'comp.windows.x',
+ 'misc.forsale',
+ 'rec.autos',
+ 'rec.motorcycles',
+ 'rec.sport.baseball',
+ 'rec.sport.hockey',
+ 'sci.crypt',
+ 'sci.electronics',
+ 'sci.med',
+ 'sci.space',
+ 'soc.religion.christian',
+ 'talk.politics.guns',
+ 'talk.politics.mideast',
+ 'talk.politics.misc',
+ 'talk.religion.misc']
+# print "model loading started"
+ticks = time.time()
+filename = 'gs_clf.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
-loaded_vectorizer = pickle.load(open("tfidf.pickle", 'rb'))
+# print time.time()-ticks
+# print "model loaded!"
 
 from googletrans import Translator
 translator = Translator()
@@ -28,6 +51,7 @@ translator = Translator()
 new_news = sys.argv[1]
 new_news = translator.translate(new_news)
 new_news=new_news.text
-rand_news = loaded_vectorizer.transform([new_news])
-pred = loaded_model.predict(rand_news)
-print pred
+# print new_news
+# rand_news = loaded_vectorizer.transform([new_news])
+pred = loaded_model.predict([new_news])
+print (name[pred[0]])

@@ -98,6 +98,25 @@
           res.json(str[1]);
       });
     }
+    app.post('/api/clf', (req, res)=> callClf(req,res));
+
+    function callClf(req, res, err) {
+      console.log("Body is",req.body);
+      postObj = req.body;
+      if(err){
+        console.log('error', err);
+        return ;
+      }
+      var spawn = require("child_process").spawn;
+      var process = spawn('python', ["./clf.py", postObj.text]);
+
+      process.stdout.on('data', function (data) {
+          console.log(data.toString());
+          var str = data.toString().split("\n");
+          console.log(str[0]);
+          res.json(str[0]);
+      });
+    }
 
 
 
